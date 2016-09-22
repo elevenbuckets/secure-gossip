@@ -3,7 +3,7 @@ var tap = require('tap')
 var block = require('block-stream2')
 
 tap.test('3 peers in a line', function (t) {
-  t.plan(2)
+  t.plan(4)
 
   var peer1 = gossip()
   var peer2 = gossip()
@@ -26,15 +26,17 @@ tap.test('3 peers in a line', function (t) {
   var p1c = 0
   var p2c = 0
 
-  peer1.on('message', function (msg) {
+  peer1.on('message', function (msg, info) {
     t.equal(p1c++, 0)
+    t.equal(info.public, peer3.keys.public)
   })
 
-  peer2.on('message', function (msg) {
+  peer2.on('message', function (msg, info) {
     t.equal(p2c++, 0)
+    t.equal(info.public, peer3.keys.public)
   })
 
-  peer3.on('message', function (msg) {
+  peer3.on('message', function (msg, info) {
     t.fail('peer3 saw their own message!')
   })
 
@@ -46,7 +48,7 @@ tap.test('3 peers in a line', function (t) {
 })
 
 tap.test('4 peers in a loop', function (t) {
-  t.plan(6)
+  t.plan(9)
 
   var peer1 = gossip()
   var peer2 = gossip()
@@ -83,23 +85,26 @@ tap.test('4 peers in a loop', function (t) {
   var p3c = 0
   var p4c = 0
 
-  peer1.on('message', function (msg) {
+  peer1.on('message', function (msg, info) {
     t.fail()
   })
 
-  peer2.on('message', function (msg) {
+  peer2.on('message', function (msg, info) {
     t.equal(p2c++, 0)
     t.deepEqual(msg, originalMsg)
+    t.equal(info.public, peer1.keys.public)
   })
 
-  peer3.on('message', function (msg) {
+  peer3.on('message', function (msg, info) {
     t.equal(p3c++, 0)
     t.deepEqual(msg, originalMsg)
+    t.equal(info.public, peer1.keys.public)
   })
 
-  peer4.on('message', function (msg) {
+  peer4.on('message', function (msg, info) {
     t.equal(p4c++, 0)
     t.deepEqual(msg, originalMsg)
+    t.equal(info.public, peer1.keys.public)
   })
 
   t.tearDown(function() {
@@ -111,7 +116,7 @@ tap.test('4 peers in a loop', function (t) {
 })
 
 tap.test('2 peers with stream breaks', function (t) {
-  t.plan(2)
+  t.plan(3)
 
   var peer1 = gossip()
   var peer2 = gossip()
@@ -129,12 +134,13 @@ tap.test('2 peers with stream breaks', function (t) {
 
   var p1c = 0
 
-  peer2.on('message', function (msg) {
+  peer2.on('message', function (msg, info) {
     t.equal(p1c++, 0)
     t.deepEqual(msg, original)
+    t.equal(info.public, peer1.keys.public)
   })
 
-  peer1.on('message', function (msg) {
+  peer1.on('message', function (msg, info) {
     t.fail('peer1 saw their own message!')
   })
 
@@ -161,12 +167,12 @@ tap.test('broken connection', function (t) {
 
   var p1c = 0
 
-  peer2.on('message', function (msg) {
+  peer2.on('message', function (msg, info) {
     p2.end()
     t.done()
   })
 
-  peer1.on('message', function (msg) {
+  peer1.on('message', function (msg, info) {
     t.fail('peer1 saw their own message!')
   })
 

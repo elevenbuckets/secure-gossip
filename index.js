@@ -59,7 +59,7 @@ Gossip.prototype.createPeerStream = function () {
             debug('current seq for', chunk.public, 'is', self.seqs[chunk.public])
             var copy = clone(chunk.data)
             delete copy.signature
-            self.emit('message', copy)
+            self.emit('message', copy, {public: chunk.public})
           } else {
             debug('old gossip; discarding')
           }
