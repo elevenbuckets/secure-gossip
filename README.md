@@ -38,24 +38,26 @@ peer1.publish({
   data: 'hello warld'
 })
 
-peer1.on('message', function (msg) {
-  console.log('p1 message', msg)
+peer1.on('message', function (msg, info) {
+  console.log('p1 message', msg, 'from', info.public)
 })
 
-peer2.on('message', function (msg) {
-  console.log('p2 message', msg)
+peer2.on('message', function (msg, info) {
+  console.log('p2 message', msg, 'from', info.public)
 })
 
-peer3.on('message', function (msg) {
-  console.log('p3 message', msg)
+peer3.on('message', function (msg, info) {
+  console.log('p3 message', msg, 'from', info.public)
 })
 ```
 
 outputs
 
 ```
-p2 message { data: "hello warld" }
-p3 message { data: "hello warld" }
+p2 message { data: "hello warld" } from UHXoKlI2blLU0GaAC3G2sUSGBUOWY7yYpN7DhWQI2/Y=.ed25519
+
+p3 message { data: "hello warld" }  from UHXoKlI2blLU0GaAC3G2sUSGBUOWY7yYpN7DhWQI2/Y=.ed25519
+
 ```
 
 ## API
@@ -93,6 +95,14 @@ Initiate a round of gossip manually, forwarding all stored messages to peers.
 ### peer.stop()
 
 Stops gossiping (clears the internal `setInterval` timer).
+
+### peer.on('message', function (msg, info) {})
+
+Event fired when a message is received from a peer.
+
+- `msg` is the original payload from the peer
+- `info` is an object, currently only having the field `public`,
+  which is a string of the sender's public key
 
 
 ## install
