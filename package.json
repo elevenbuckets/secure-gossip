@@ -1,7 +1,7 @@
 {
   "name": "secure-gossip",
   "description": "distributed, secure, transport agnostic message gossip protocol",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "repository": {
     "url": "git://github.com/noffle/secure-gossip.git"
   },
