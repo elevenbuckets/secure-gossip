@@ -42,10 +42,7 @@ Gossip.prototype.createPeerStream = function () {
   var self = this
 
   var stream = new Duplex({
-
-    read: function (n) {
-    },
-
+    read: function (n) {},
     write: function (rawChunk, enc, next) {
       try {
         var chunk = JSON.parse(rawChunk)
@@ -66,10 +63,11 @@ Gossip.prototype.createPeerStream = function () {
         } else {
           debug('received message with bad signature! discarding')
         }
-        next()
       } catch (e) {
         debug('bad json (or end of stream)')
       }
+
+      next()
     }
   })
 
