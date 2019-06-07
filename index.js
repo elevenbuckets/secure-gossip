@@ -38,7 +38,7 @@ class Gossip extends EventEmitter {
           						if (this.seqs[chunk.public] === undefined || this.seqs[chunk.public] < chunk.seq) {
             							this.seqs[chunk.public] = chunk.seq
             							this.store.push(rawChunk + '\n')
-            							debug('current seq for', chunk.public, 'is', self.seqs[chunk.public])
+            							debug('current seq for', chunk.public, 'is', this.seqs[chunk.public])
             							let copy = { ...chunk.data };
             							delete copy.signature
             							this.emit('message', copy, {public: chunk.public})
