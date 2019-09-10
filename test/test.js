@@ -5,9 +5,9 @@ var block = require('block-stream2')
 tap.test('3 peers in a line', function (t) {
   t.plan(4)
 
-  var peer1 = gossip()
-  var peer2 = gossip()
-  var peer3 = gossip()
+  var peer1 = new gossip()
+  var peer2 = new gossip()
+  var peer3 = new gossip()
 
   var p1 = peer1.createPeerStream()
   var p21 = peer2.createPeerStream()
@@ -50,10 +50,10 @@ tap.test('3 peers in a line', function (t) {
 tap.test('4 peers in a loop', function (t) {
   t.plan(9)
 
-  var peer1 = gossip()
-  var peer2 = gossip()
-  var peer3 = gossip()
-  var peer4 = gossip()
+  var peer1 = new gossip()
+  var peer2 = new gossip()
+  var peer3 = new gossip()
+  var peer4 = new gossip()
 
   var p11 = peer1.createPeerStream()
   var p12 = peer1.createPeerStream()
@@ -118,8 +118,8 @@ tap.test('4 peers in a loop', function (t) {
 tap.test('2 peers with stream breaks', function (t) {
   t.plan(3)
 
-  var peer1 = gossip()
-  var peer2 = gossip()
+  var peer1 = new gossip()
+  var peer2 = new gossip()
 
   var p1 = peer1.createPeerStream()
   var p2 = peer2.createPeerStream()
@@ -151,8 +151,8 @@ tap.test('2 peers with stream breaks', function (t) {
 })
 
 tap.test('broken connection', function (t) {
-  var peer1 = gossip()
-  var peer2 = gossip()
+  var peer1 = new gossip()
+  var peer2 = new gossip()
 
   var p1 = peer1.createPeerStream()
   var p2 = peer2.createPeerStream()
