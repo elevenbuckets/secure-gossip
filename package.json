@@ -14,7 +14,7 @@
     "pumpify": "^2.0.0",
     "readable-stream": "^3.4.0",
     "split": "^1.0.1",
-    "ssb-keys": "^4.0.10"
+    "ssb-keys": "^7.2.0"
   },
   "devDependencies": {
     "block-stream2": "^1.1.0",
